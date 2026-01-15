@@ -3,7 +3,14 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebas
         import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // CONFIGURAÇÃO
-        const firebaseConfig = JSON.parse(__firebase_config);
+        const firebaseConfig = {
+  apiKey: "AIzaSyA82uxl03IEIt5aZ-Zq6dR4P3x0IPiO8Nk",
+  authDomain: "lifesupport-bb82e.firebaseapp.com",
+  projectId: "lifesupport-bb82e",
+  storageBucket: "lifesupport-bb82e.firebasestorage.app",
+  messagingSenderId: "472722713250",
+  appId: "1:472722713250:web:d89f72f34fbf8f535785fb"
+};
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
@@ -582,4 +589,5 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebas
 
         initAuth();
         window.switchChain('extra');
+
 
