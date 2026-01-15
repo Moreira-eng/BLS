@@ -22,32 +22,28 @@ window.toggleAccordion = (button) => {
     }
 };
 
-// TEMA (MODO ESCURO)
+// --- LÓGICA DO DARK MODE ---
 window.toggleTheme = () => {
     const html = document.documentElement;
-    const moonIcon = document.getElementById('moon-icon');
-    const sunIcon = document.getElementById('sun-icon');
+    const moon = document.getElementById('moon-icon');
+    const sun = document.getElementById('sun-icon');
     
-    if (html.classList.contains('dark')) {
-        html.classList.remove('dark');
-        moonIcon.classList.remove('hidden');
-        sunIcon.classList.add('hidden');
-        localStorage.setItem('theme', 'light');
-    } else {
-        html.classList.add('dark');
-        moonIcon.classList.add('hidden');
-        sunIcon.classList.remove('hidden');
-        localStorage.setItem('theme', 'dark');
+    html.classList.toggle('dark');
+    const isDark = html.classList.contains('dark');
+    
+    // Mostra/Esconde os ícones baseados no tema atual
+    if (moon && sun) {
+        if (isDark) {
+            moon.classList.add('hidden');
+            sun.classList.remove('hidden');
+        } else {
+            moon.classList.remove('hidden');
+            sun.classList.add('hidden');
+        }
     }
-    if (learningChartInstance) window.renderDashboard();
+    
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
 };
-
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-    document.documentElement.classList.add('dark');
-    if(document.getElementById('moon-icon')) document.getElementById('moon-icon').classList.add('hidden');
-    if(document.getElementById('sun-icon')) document.getElementById('sun-icon').classList.remove('hidden');
-}
 
 // METRÔNOMO
 let metroState = {
@@ -422,6 +418,35 @@ window.getFeedbackHTML = (results, questions) => {
         </div>`;
 };
 
+// --- LÓGICA DO MODAL DE LOGIN ---
+window.openAuthModal = () => {
+    const modal = document.getElementById('auth-modal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex'); // Garante que o modal apareça centralizado
+    }
+};
+
+window.closeAuthModal = () => {
+    const modal = document.getElementById('auth-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+};
+
+// --- AJUSTE NAS TELAS DE LOGIN ---
+window.toggleAuthView = (view) => {
+    const loginView = document.getElementById('auth-login-view');
+    const registerView = document.getElementById('auth-register-view');
+    if (view === 'login') {
+        loginView.classList.remove('hidden');
+        registerView.classList.add('hidden');
+    } else {
+        loginView.classList.add('hidden');
+        registerView.classList.remove('hidden');
+    }
+};
 
 
 
