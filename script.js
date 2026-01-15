@@ -389,6 +389,8 @@ window.submitFinalAnswer = (i) => {
         if(ui) ui.classList.add('hidden');
         if(intro) {
             intro.classList.remove('hidden');
+            // COLOQUE A LINHA EXATAMENTE AQUI:
+        window.updateDashboard(score);
             intro.innerHTML = `
                 <div class="p-12 bg-rose-50 dark:bg-rose-900/20 rounded-[3rem] border-2 border-rose-100 dark:border-slate-800 text-center">
                     <h3 class="text-4xl font-black mb-2 text-rose-900 dark:text-blue-400 italic">Resultado Final</h3>
@@ -509,6 +511,7 @@ window.renderLearningChart = () => {
 
 // Carrega dados existentes ao abrir o site
 window.addEventListener('load', () => { if(attempts.length > 0) window.updateDashboard(); });
+
 
 
 
