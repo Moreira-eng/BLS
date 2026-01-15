@@ -420,15 +420,16 @@ window.getFeedbackHTML = (results, questions) => {
         </div>`;
 };
 
-// --- LÓGICA DO MODAL DE LOGIN ---
+// Abre a janela de login
 window.openAuthModal = () => {
     const modal = document.getElementById('auth-modal');
     if (modal) {
         modal.classList.remove('hidden');
-        modal.classList.add('flex'); // Garante que o modal apareça centralizado
+        modal.classList.add('flex'); // Garante a centralização
     }
 };
 
+// Fecha a janela de login
 window.closeAuthModal = () => {
     const modal = document.getElementById('auth-modal');
     if (modal) {
@@ -437,18 +438,21 @@ window.closeAuthModal = () => {
     }
 };
 
-// --- AJUSTE NAS TELAS DE LOGIN ---
+// Alterna entre a tela de "Entrar" e "Criar Conta"
 window.toggleAuthView = (view) => {
     const loginView = document.getElementById('auth-login-view');
     const registerView = document.getElementById('auth-register-view');
-    if (view === 'login') {
-        loginView.classList.remove('hidden');
-        registerView.classList.add('hidden');
-    } else {
-        loginView.classList.add('hidden');
-        registerView.classList.remove('hidden');
+    if (loginView && registerView) {
+        if (view === 'login') {
+            loginView.classList.remove('hidden');
+            registerView.classList.add('hidden');
+        } else {
+            loginView.classList.add('hidden');
+            registerView.classList.remove('hidden');
+        }
     }
 };
+
 
 
 
