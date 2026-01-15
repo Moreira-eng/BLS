@@ -1,20 +1,13 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+//import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        //import { getAuth, signInAnonymously, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+       // import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // CONFIGURAÇÃO
-        const firebaseConfig = {
-  apiKey: "AIzaSyA82uxl03IEIt5aZ-Zq6dR4P3x0IPiO8Nk",
-  authDomain: "lifesupport-bb82e.firebaseapp.com",
-  projectId: "lifesupport-bb82e",
-  storageBucket: "lifesupport-bb82e.firebasestorage.app",
-  messagingSenderId: "472722713250",
-  appId: "1:472722713250:web:d89f72f34fbf8f535785fb"
-};
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'lifesupport-pro-v1';
+        //const firebaseConfig = {
+        //const app = initializeApp(firebaseConfig);
+        //const auth = getAuth(app);
+       //const db = getFirestore(app);
+        //const appId = typeof __app_id !== 'undefined' ? __app_id : 'lifesupport-pro-v1';
 
         let currentUser = null;
         let attempts = [];
@@ -589,5 +582,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebas
 
         initAuth();
         window.switchChain('extra');
+
 
 
