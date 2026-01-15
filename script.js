@@ -1,4 +1,4 @@
-// REMOVEMOS OS IMPORTS POR ENQUANTO PARA GARANTIR QUE O SCRIPT NÃO TRAVE
+// Removidos os imports e a inicialização que causavam erro no console
 const appId = 'lifesupport-pro-v1';
 
 let currentUser = null;
@@ -9,8 +9,8 @@ let sessionResults = [];
 let finalExamResults = [];
 let learningChartInstance = null;
 
-// ADICIONE ESTA LINHA PARA GARANTIR QUE O DASHBOARD NÃO QUEBRE O SCRIPT
-window.renderDashboard = () => { console.log("Dashboard pronto"); };
+// Adicione esta função vazia para evitar erros de chamada no Dashboard
+window.renderDashboard = () => { console.log("Dashboard carregado em modo offline."); };
 
 // ACORDEÃO
 window.toggleAccordion = (button) => {
@@ -421,6 +421,7 @@ window.getFeedbackHTML = (results, questions) => {
             </div>
         </div>`;
 };
+
 
 
 
