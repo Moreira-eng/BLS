@@ -26,19 +26,23 @@ window.toggleAccordion = (button) => {
 // --- LÓGICA DO DARK MODE ---
 window.toggleTheme = () => {
     const html = document.documentElement;
-    const moon = document.getElementById('moon-icon');
-    const sun = document.getElementById('sun-icon');
-
-    // Inverte a classe dark
-    const isDark = html.classList.toggle('dark');
-
-    // Troca a visibilidade dos ícones se eles existirem
-    if (moon && sun) {
-        moon.classList.toggle('hidden', isDark);
-        sun.classList.toggle('hidden', !isDark);
+    const moonIcon = document.getElementById('moon-icon');
+    const sunIcon = document.getElementById('sun-icon');
+    
+    // Troca a cor primeiro (independente dos ícones)
+    html.classList.toggle('dark');
+    const isDark = html.classList.contains('dark');
+    
+    // Altera os ícones apenas se eles existirem no seu HTML
+    if (moonIcon && sunIcon) {
+        if (isDark) {
+            moonIcon.classList.add('hidden');
+            sunIcon.classList.remove('hidden');
+        } else {
+            moonIcon.classList.remove('hidden');
+            sunIcon.classList.add('hidden');
+        }
     }
-
-    // Salva a preferência
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
 };
 
@@ -447,6 +451,7 @@ window.toggleAuthView = (view) => {
         }
     }
 };
+
 
 
 
