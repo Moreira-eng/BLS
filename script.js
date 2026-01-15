@@ -422,6 +422,29 @@ window.getFeedbackHTML = (results, questions) => {
         </div>`;
 };
 
+// Funções para controlar o Modal de Login
+window.openAuthModal = () => {
+    const modal = document.getElementById('auth-modal');
+    if(modal) modal.classList.remove('hidden');
+};
+
+window.closeAuthModal = () => {
+    const modal = document.getElementById('auth-modal');
+    if(modal) modal.classList.add('hidden');
+};
+
+window.toggleAuthView = (view) => {
+    const loginView = document.getElementById('auth-login-view');
+    const registerView = document.getElementById('auth-register-view');
+    if(view === 'login') {
+        loginView.classList.remove('hidden');
+        registerView.classList.add('hidden');
+    } else {
+        loginView.classList.add('hidden');
+        registerView.classList.remove('hidden');
+    }
+};
+
 
 
 
