@@ -323,27 +323,40 @@ window.renderQuestion = () => {
 
 window.submitAnswer = (i) => {
     const q = quizQuestions[currentQIndex];
-    sessionResults.push({ category: q.cat, correct: i === q.correct, questionIndex: currentQIndex });
     
+    // Salva se a resposta foi correta
+    sessionResults.push({ 
+        category: q.cat, 
+        correct: i === q.correct 
+    });
+
     if (currentQIndex < quizQuestions.length - 1) {
         currentQIndex++; 
         window.renderQuestion();
     } else {
-        const score = Math.round((sessionResults.filter(r => r.correct).length / quizQuestions.length) * 100);
-        const ui = document.getElementById('quiz-ui');
-        const intro = document.getElementById('quiz-intro');
-        if(ui) ui.classList.add('hidden');
-        if(intro) {
-            intro.classList.remove('hidden');
-            const feedbackList = window.getFeedbackHTML(sessionResults, quizQuestions);
-            intro.innerHTML = `
-                <div class="p-12 bg-blue-50 dark:bg-slate-800/50 rounded-[3rem] border-2 border-blue-100 dark:border-slate-800 text-center">
-                    <h3 class="text-4xl font-black mb-2 text-blue-900 dark:text-blue-400 italic">Ciclo Concluído</h3>
-                    <div class="text-8xl font-black text-blue-600 dark:text-blue-500 mb-8">${score}%</div>
-                    <button onclick="window.startQuiz()" class="bg-blue-700 text-white px-10 py-4 rounded-2xl font-black uppercase text-xs shadow-xl">Refazer Simulado</button>
-                    ${feedbackList}
-                </div>`;
-        }
+        // --- O SIMULADO ACABOU AQUI ---
+        const total = sessionResults.length;
+        const acertos = sessionResults.filter(r => r.correct).length;
+        const score = Math.round((acertos / total) * 100);
+
+        // Adiciona a nota ao histórico global
+        attempts.push(score);
+
+        // Atualiza a tela de encerramento do simulado
+        document.getElementById('quiz-ui').classList.add('hidden');
+        document.getElementById('quiz-intro').classList.remove('hidden');
+        document.getElementById('quiz-intro').innerHTML = `
+            <div class="p-12 text-center">
+                <h3 class="text-4xl font-black mb-4">Nota: ${score}%</h3>
+                <p class="mb-8 text-slate-500">Seu desempenho foi registrado no Dashboard.</p>
+                <div class="flex gap-4 justify-center">
+                    <button onclick="window.startQuiz()" class="bg-blue-700 text-white px-8 py-4 rounded-2xl font-black uppercase text-xs">Refazer</button>
+                    <button onclick="window.showView('avaliacao')" class="bg-slate-800 text-white px-8 py-4 rounded-2xl font-black uppercase text-xs">Ver Evolução</button>
+                </div>
+            </div>`;
+
+        // CHAMA O DASHBOARD PARA ATUALIZAR OS DADOS
+        window.updateDashboard(score);
     }
 };
 
@@ -524,6 +537,71 @@ window.finishQuiz = () => {
     window.showView('avaliacao'); // Leva o usuário direto para ver o progresso
 };
 
+Para que o seu Dashboard funcione e mostre os resultados do simulado, você precisa fazer duas alterações específicas no seu arquivo script.js.
+
+1. O que ADICIONAR (No final do seu script.js)
+Role até o fim do seu arquivo script.js e cole estas duas funções. Elas são responsáveis por "acender" o painel e desenhar o gráfico:
+
+JavaScript
+
+// Função para atualizar os números e trocar a tela do Dashboard
+window.updateDashboard = (lastScore) => {
+    const statsPlaceholder = document.getElementById('stats-placeholder');
+    const statsContainer = document.getElementById('stats-container');
+    
+    // 1. Esconde a mensagem "Sem Dados" e mostra os gráficos
+    if(statsPlaceholder) statsPlaceholder.classList.add('hidden');
+    if(statsContainer) statsContainer.classList.remove('hidden');
+
+    // 2. Atualiza os textos dos cards com a nota atual
+    document.getElementById('avg-score').innerText = `${lastScore}%`;
+    document.getElementById('total-attempts').innerText = attempts.length;
+    document.getElementById('latest-score').innerText = `${lastScore}%`;
+    
+    // Calcula a melhor pontuação histórica
+    const best = Math.max(...attempts);
+    document.getElementById('best-score').innerText = `${best}%`;
+
+    // 3. Desenha o gráfico de evolução
+    window.renderLearningChart();
+};
+
+// Função para gerar o gráfico visual usando Chart.js
+window.renderLearningChart = () => {
+    const ctx = document.getElementById('learningChart');
+    if (!ctx) return;
+
+    if (learningChartInstance) {
+        learningChartInstance.destroy();
+    }
+
+    learningChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: attempts.map((_, i) => `Sessão ${i + 1}`),
+            datasets: [{
+                label: 'Evolução %',
+                data: attempts,
+                borderColor: '#1e40af',
+                backgroundColor: 'rgba(30, 64, 175, 0.1)',
+                borderWidth: 4,
+                fill: true,
+                tension: 0.4,
+                pointRadius: 6,
+                pointBackgroundColor: '#1e40af'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true, max: 100 },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+};
 
 
 
