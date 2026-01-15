@@ -27,23 +27,17 @@ window.toggleTheme = () => {
     const html = document.documentElement;
     const moon = document.getElementById('moon-icon');
     const sun = document.getElementById('sun-icon');
-    
-    // Troca a classe dark no HTML
-    html.classList.toggle('dark');
-    const isDark = html.classList.contains('dark');
-    
-    // Altera os ícones APENAS se eles existirem no HTML
+
+    // Inverte a classe dark
+    const isDark = html.classList.toggle('dark');
+
+    // Troca a visibilidade dos ícones se eles existirem
     if (moon && sun) {
-        if (isDark) {
-            moon.classList.add('hidden');
-            sun.classList.remove('hidden');
-        } else {
-            moon.classList.remove('hidden');
-            sun.classList.add('hidden');
-        }
+        moon.classList.toggle('hidden', isDark);
+        sun.classList.toggle('hidden', !isDark);
     }
-    
-    // Salva a escolha do usuário para a próxima vez que ele abrir o site
+
+    // Salva a preferência
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
 };
 
@@ -452,6 +446,7 @@ window.toggleAuthView = (view) => {
         }
     }
 };
+
 
 
 
