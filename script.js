@@ -285,3 +285,143 @@ if(flashGrid) flashGrid.innerHTML = flashcards.map(f => `<div class="flashcard-c
 
 // INICIALIZAÇÃO PADRÃO
 window.switchChain('extra');
+// --- LÓGICA DO QUIZ (SIMULADOR) ---
+window.startQuiz = () => {
+    currentQIndex = 0; 
+    sessionResults = [];
+    const intro = document.getElementById('quiz-intro');
+    const ui = document.getElementById('quiz-ui');
+    if(intro) intro.classList.add('hidden');
+    if(ui) ui.classList.remove('hidden');
+    window.renderQuestion();
+};
+
+window.renderQuestion = () => {
+    const q = quizQuestions[currentQIndex];
+    const qCount = document.getElementById('q-count');
+    const qProgress = document.getElementById('q-progress');
+    const content = document.getElementById('quiz-content');
+
+    if(qCount) qCount.innerText = `${currentQIndex + 1} / ${quizQuestions.length}`;
+    if(qProgress) qProgress.style.width = `${((currentQIndex + 1) / quizQuestions.length) * 100}%`;
+    
+    if(content) {
+        content.innerHTML = `
+            <div class="mb-6 flex items-center justify-between">
+                <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 rounded-lg text-[10px] font-black uppercase">${q.cat}</span>
+            </div>
+            <h3 class="text-2xl font-black mb-10 leading-tight text-blue-950 dark:text-blue-400">${q.q}</h3>
+            <div class="space-y-4">
+                ${q.opts.map((o, i) => `
+                    <button onclick="window.submitAnswer(${i})" class="quiz-option w-full text-left p-6 rounded-3xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 hover:border-blue-400 hover:bg-blue-50 flex items-center group transition-all">
+                        <span class="w-10 h-10 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center mr-6 font-black group-hover:bg-blue-600 group-hover:text-white">${i+1}</span>
+                        <span class="font-bold text-slate-700 dark:text-slate-300 uppercase text-xs">${o}</span>
+                    </button>
+                `).join('')}
+            </div>`;
+    }
+};
+
+window.submitAnswer = (i) => {
+    const q = quizQuestions[currentQIndex];
+    sessionResults.push({ category: q.cat, correct: i === q.correct, questionIndex: currentQIndex });
+    
+    if (currentQIndex < quizQuestions.length - 1) {
+        currentQIndex++; 
+        window.renderQuestion();
+    } else {
+        const score = Math.round((sessionResults.filter(r => r.correct).length / quizQuestions.length) * 100);
+        const ui = document.getElementById('quiz-ui');
+        const intro = document.getElementById('quiz-intro');
+        if(ui) ui.classList.add('hidden');
+        if(intro) {
+            intro.classList.remove('hidden');
+            const feedbackList = window.getFeedbackHTML(sessionResults, quizQuestions);
+            intro.innerHTML = `
+                <div class="p-12 bg-blue-50 dark:bg-slate-800/50 rounded-[3rem] border-2 border-blue-100 dark:border-slate-800 text-center">
+                    <h3 class="text-4xl font-black mb-2 text-blue-900 dark:text-blue-400 italic">Ciclo Concluído</h3>
+                    <div class="text-8xl font-black text-blue-600 dark:text-blue-500 mb-8">${score}%</div>
+                    <button onclick="window.startQuiz()" class="bg-blue-700 text-white px-10 py-4 rounded-2xl font-black uppercase text-xs shadow-xl">Refazer Simulado</button>
+                    ${feedbackList}
+                </div>`;
+        }
+    }
+};
+
+// --- LÓGICA DA AVALIAÇÃO FINAL ---
+window.startFinalExam = () => {
+    currentFIndex = 0; 
+    finalExamResults = [];
+    const intro = document.getElementById('final-intro');
+    const ui = document.getElementById('final-ui');
+    if(intro) intro.classList.add('hidden');
+    if(ui) ui.classList.remove('hidden');
+    window.renderFinalQuestion();
+};
+
+window.renderFinalQuestion = () => {
+    const q = finalExamQuestions[currentFIndex];
+    const fCount = document.getElementById('f-count');
+    const fProgress = document.getElementById('f-progress');
+    const content = document.getElementById('final-content');
+
+    if(fCount) fCount.innerText = `${currentFIndex + 1} / ${finalExamQuestions.length}`;
+    if(fProgress) fProgress.style.width = `${((currentFIndex + 1) / finalExamQuestions.length) * 100}%`;
+
+    if(content) {
+        content.innerHTML = `
+            <h3 class="text-2xl font-black mb-10 leading-tight text-slate-900 dark:text-white">${q.q}</h3>
+            <div class="space-y-4">
+                ${q.opts.map((o, i) => `
+                    <button onclick="window.submitFinalAnswer(${i})" class="quiz-option w-full text-left p-6 rounded-3xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 hover:border-rose-400 hover:bg-rose-50 flex items-center group transition-all">
+                        <span class="w-10 h-10 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center mr-6 font-black group-hover:bg-rose-700 group-hover:text-white">${i+1}</span>
+                        <span class="font-bold text-slate-700 dark:text-slate-300 uppercase text-xs">${o}</span>
+                    </button>
+                `).join('')}
+            </div>`;
+    }
+};
+
+window.submitFinalAnswer = (i) => {
+    const q = finalExamQuestions[currentFIndex];
+    finalExamResults.push({ category: q.cat, correct: i === q.correct, questionIndex: currentFIndex });
+    
+    if (currentFIndex < finalExamQuestions.length - 1) {
+        currentFIndex++; 
+        window.renderFinalQuestion();
+    } else {
+        const score = Math.round((finalExamResults.filter(r => r.correct).length / finalExamQuestions.length) * 100);
+        const ui = document.getElementById('final-ui');
+        const intro = document.getElementById('final-intro');
+        if(ui) ui.classList.add('hidden');
+        if(intro) {
+            intro.classList.remove('hidden');
+            intro.innerHTML = `
+                <div class="p-12 bg-rose-50 dark:bg-rose-900/20 rounded-[3rem] border-2 border-rose-100 dark:border-slate-800 text-center">
+                    <h3 class="text-4xl font-black mb-2 text-rose-900 dark:text-blue-400 italic">Resultado Final</h3>
+                    <div class="text-8xl font-black text-rose-700 dark:text-rose-600 mb-4">${score}%</div>
+                    <button onclick="window.startFinalExam()" class="bg-rose-700 text-white px-10 py-4 rounded-2xl font-black uppercase text-xs shadow-xl">Tentar Novamente</button>
+                </div>`;
+        }
+    }
+};
+
+window.getFeedbackHTML = (results, questions) => {
+    const incorrects = results.filter(r => !r.correct);
+    if (incorrects.length === 0) return `<p class="text-emerald-600 font-bold mt-8">Desempenho Perfeito!</p>`;
+    
+    return `
+        <div class="mt-12 text-left">
+            <h4 class="text-[10px] font-black uppercase text-rose-500 tracking-widest mb-6 text-center italic">Revisão Técnica</h4>
+            <div class="space-y-4">
+                ${incorrects.map(r => {
+                    const q = questions[r.questionIndex];
+                    return `
+                        <div class="p-6 bg-white dark:bg-slate-900 border border-rose-100 rounded-3xl">
+                            <p class="text-sm font-black mb-2 text-slate-800 dark:text-slate-200">${q.q}</p>
+                            <p class="text-xs text-emerald-600 font-bold italic">Correção: ${q.opts[q.correct]}</p>
+                        </div>`;
+                }).join('')}
+            </div>
+        </div>`;
+};
