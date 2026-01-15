@@ -1,6 +1,7 @@
-// Removidos os imports e a inicialização que causavam erro no console
-const appId = 'lifesupport-pro-v1';
+// REMOVA TODOS OS IMPORTS DO FIREBASE DO TOPO
+// O arquivo deve começar diretamente com as definições das variáveis globais:
 
+const appId = 'lifesupport-pro-v1';
 let currentUser = null;
 let attempts = [];
 let currentQIndex = 0;
@@ -9,8 +10,8 @@ let sessionResults = [];
 let finalExamResults = [];
 let learningChartInstance = null;
 
-// Adicione esta função vazia para evitar erros de chamada no Dashboard
-window.renderDashboard = () => { console.log("Dashboard carregado em modo offline."); };
+// Coloque esta função aqui para evitar erros de histórico vazio
+window.renderDashboard = () => { console.log("Modo offline ativo."); };
 
 // ACORDEÃO
 window.toggleAccordion = (button) => {
@@ -446,6 +447,7 @@ window.toggleAuthView = (view) => {
         }
     }
 };
+
 
 
 
