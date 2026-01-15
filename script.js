@@ -459,6 +459,70 @@ window.toggleAuthView = (view) => {
 };
 
 
+// --- ATUALIZAÇÃO DO DASHBOARD ---
+window.updateDashboard = () => {
+    const statsPlaceholder = document.getElementById('stats-placeholder');
+    const statsContainer = document.getElementById('stats-container');
+    
+    // Se não houver tentativas, mantém o aviso de "Sem Dados"
+    if (sessionResults.length === 0) return;
+
+    // Mostra o container de estatísticas e esconde o aviso
+    if(statsPlaceholder) statsPlaceholder.classList.add('hidden');
+    if(statsContainer) statsContainer.classList.remove('hidden');
+
+    // Cálculo das métricas
+    const total = sessionResults.length;
+    const acertos = sessionResults.filter(r => r.correct).length;
+    const score = Math.round((acertos / total) * 100);
+
+    // Atualiza os números no HTML
+    document.getElementById('avg-score').innerText = `${score}%`;
+    document.getElementById('total-attempts').innerText = `1`; // Para versão simples
+    document.getElementById('best-score').innerText = `${score}%`;
+    document.getElementById('latest-score').innerText = `${score}%`;
+
+    // Renderiza o Gráfico se o Chart.js estiver carregado
+    window.renderLearningChart(score);
+};
+
+// Função para criar o gráfico visual
+window.renderLearningChart = (lastScore) => {
+    const ctx = document.getElementById('learningChart');
+    if (!ctx) return;
+
+    if (learningChartInstance) {
+        learningChartInstance.destroy();
+    }
+
+    learningChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Sessão 1'],
+            datasets: [{
+                label: 'Desempenho %',
+                data: [lastScore],
+                borderColor: '#1e40af',
+                backgroundColor: 'rgba(30, 64, 175, 0.1)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { y: { beginAtZero: true, max: 100 } }
+        }
+    });
+};
+
+// --- MODIFIQUE A FUNÇÃO DE FINALIZAR O QUIZ ---
+// Procure onde o quiz termina e adicione a chamada do dashboard:
+window.finishQuiz = () => {
+    // ... sua lógica de cálculo de score ...
+    window.updateDashboard(); // Esta linha faz o dashboard aparecer
+    window.showView('avaliacao'); // Leva o usuário direto para ver o progresso
+};
 
 
 
