@@ -25,25 +25,22 @@ window.toggleAccordion = (button) => {
 
 // --- LÓGICA DO DARK MODE ---
 window.toggleTheme = () => {
-    const html = document.documentElement;
+    const html = document.documentElement; // Isso pega a tag <html>
     const moonIcon = document.getElementById('moon-icon');
     const sunIcon = document.getElementById('sun-icon');
-    
-    // Troca a cor primeiro (independente dos ícones)
-    html.classList.toggle('dark');
-    const isDark = html.classList.contains('dark');
-    
-    // Altera os ícones apenas se eles existirem no seu HTML
-    if (moonIcon && sunIcon) {
-        if (isDark) {
-            moonIcon.classList.add('hidden');
-            sunIcon.classList.remove('hidden');
-        } else {
-            moonIcon.classList.remove('hidden');
-            sunIcon.classList.add('hidden');
-        }
+
+    // 1. Alterna a classe dark na raiz do documento
+    if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+        if (moonIcon) moonIcon.classList.remove('hidden');
+        if (sunIcon) sunIcon.classList.add('hidden');
+    } else {
+        html.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+        if (moonIcon) moonIcon.classList.add('hidden');
+        if (sunIcon) sunIcon.classList.remove('hidden');
     }
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
 };
 
 // METRÔNOMO
@@ -451,6 +448,7 @@ window.toggleAuthView = (view) => {
         }
     }
 };
+
 
 
 
