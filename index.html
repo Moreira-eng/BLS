@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeSupport Pro - Treinamento SBV</title>
+	
+<link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 overflow-x-hidden font-bold">
+
+    <div id="auth-modal" class="fixed inset-0 z-[100] bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 w-full max-w-md p-8 rounded-[2.5rem] shadow-2xl">
+            <div id="auth-login-view">
+                <h3 class="text-3xl font-black text-blue-900 dark:text-blue-400 mb-2">Entrar</h3>
+                <form id="login-form" class="space-y-4">
+                    <input type="email" id="login-email" placeholder="E-mail" class="w-full px-5 py-4 bg-slate-100 dark:bg-slate-800 rounded-2xl outline-none" required>
+                    <input type="password" id="login-password" placeholder="Senha" class="w-full px-5 py-4 bg-slate-100 dark:bg-slate-800 rounded-2xl outline-none" required>
+                    <button type="submit" class="w-full bg-blue-700 text-white py-4 rounded-2xl font-bold">Entrar</button>
+                </form>
+                <button onclick="window.toggleAuthView('register')" class="mt-4 text-blue-700 text-sm">Criar conta</button>
+            </div>
+            <div id="auth-register-view" class="hidden">
+                <h3 class="text-3xl font-black text-blue-900 dark:text-blue-400 mb-2">Criar Conta</h3>
+                <form id="register-form" class="space-y-4">
+                    <input type="email" id="reg-email" placeholder="E-mail" class="w-full px-5 py-4 bg-slate-100 dark:bg-slate-800 rounded-2xl outline-none" required>
+                    <input type="password" id="reg-password" placeholder="Senha" class="w-full px-5 py-4 bg-slate-100 dark:bg-slate-800 rounded-2xl outline-none" required>
+                    <button type="submit" class="w-full bg-blue-700 text-white py-4 rounded-2xl font-bold">Registrar</button>
+                </form>
+                <button onclick="window.toggleAuthView('login')" class="mt-4 text-blue-700 text-sm">Voltar</button>
+            </div>
+            <button onclick="window.closeAuthModal()" class="mt-4 w-full text-slate-400 text-xs">Fechar</button>
+        </div>
+    </div>
+
+    <div id="sidebar-overlay" class="sidebar-overlay" onclick="window.toggleSidebar()"></div>
+    <aside id="sidebar" class="fixed top-0 left-0 h-full w-80 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-[70] -translate-x-full shadow-2xl flex flex-col transition-transform">
+        <div class="p-8 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+            <span class="text-xl font-black text-blue-900 dark:text-blue-400">LifeSupport</span>
+            <button onclick="window.toggleSidebar()">X</button>
+        </div>
+        <nav class="flex-1 p-6 space-y-2 overflow-y-auto">
+            <button onclick="window.showView('hero')" class="w-full text-left p-4 hover:bg-blue-50 rounded-xl">Início</button>
+            <button onclick="window.showView('metronomo')" class="w-full text-left p-4 hover:bg-blue-50 rounded-xl">Metrônomo RCP</button>
+            <button onclick="window.showView('pratica')" class="w-full text-left p-4 hover:bg-blue-50 rounded-xl">Simulador</button>
+        </nav>
+    </aside>
+
+    <header class="sticky top-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+            <button onclick="window.toggleSidebar()" class="p-2">Menu</button>
+            <button onclick="window.toggleTheme()" id="theme-toggle" class="p-2">🌙/☀️</button>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-12">
+        <section id="view-hero" class="view-section active">
+            <div class="text-center">
+                <h1 class="text-5xl font-black mb-6">Ciência para Preservar Vidas.</h1>
+                <button onclick="window.showView('metronomo')" class="bg-blue-700 text-white px-8 py-4 rounded-2xl font-bold">Começar</button>
+            </div>
+        </section>
+
+        <section id="view-metronomo" class="view-section">
+            <div class="text-center">
+                <h2 class="text-4xl font-black mb-10">Metrônomo RCP</h2>
+                <div id="metro-visual" class="w-48 h-48 bg-blue-600 rounded-full mx-auto flex items-center justify-center mb-8">
+                    <span id="bpm-display" class="text-white font-black text-2xl">110 BPM</span>
+                </div>
+                <button id="metro-toggle" onclick="window.toggleMetronome()" class="bg-blue-700 text-white px-10 py-5 rounded-2xl">Iniciar Batida</button>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>

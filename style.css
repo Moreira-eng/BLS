@@ -1,0 +1,36 @@
+body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; transition: background-color 0.3s ease, color 0.3s ease; }
+.medical-blue { background-color: #1e40af; }
+.card-shadow { box-shadow: 0 10px 40px rgba(30, 64, 175, 0.08); }
+
+@keyframes heartPulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); opacity: 0.8; }
+}
+.animate-rcp { animation: heartPulse 0.54s infinite; }
+
+#sidebar { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.sidebar-overlay {
+    display: none;
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(2px);
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+}
+.sidebar-overlay.active { display: block; }
+
+.view-section { display: none; }
+.view-section.active { display: block; animation: fadeIn 0.4s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.pulse-active {
+    box-shadow: 0 0 0 20px rgba(30, 64, 175, 0);
+    animation: visualPulse 0.54s infinite;
+}
+
+@keyframes visualPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
