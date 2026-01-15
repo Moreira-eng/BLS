@@ -81,7 +81,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebas
             }
         };
 
-        function startMetronome() {
+        window.startMetronome() {
             if (!metroState.audioCtx) {
                 metroState.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             }
@@ -105,7 +105,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebas
             }
         }
 
-        function stopMetronome() {
+        window.stopMetronome() {
             const btn = document.getElementById('metro-toggle');
             const ring = document.getElementById('metro-pulse-ring');
             clearInterval(metroState.interval);
@@ -121,7 +121,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebas
             else startMetronome();
         };
 
-        function playTick() {
+        window.playTick() {
             const osc = metroState.audioCtx.createOscillator();
             const gain = metroState.audioCtx.createGain();
             osc.type = 'sine';
@@ -132,7 +132,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebas
             osc.start(); osc.stop(metroState.audioCtx.currentTime + 0.1);
         }
 
-        function triggerPulse() {
+        window.triggerPulse() {
             const visual = document.getElementById('metro-visual');
             if (visual) {
                 visual.classList.add('scale-105', 'bg-blue-600/70', 'dark:bg-slate-700/70');
@@ -582,3 +582,4 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebas
 
         initAuth();
         window.switchChain('extra');
+
