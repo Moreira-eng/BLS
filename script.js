@@ -25,26 +25,32 @@ window.toggleAccordion = (button) => {
 
 // --- LÓGICA DO DARK MODE ---
 window.toggleTheme = () => {
-    const html = document.documentElement;
-    const moonIcon = document.getElementById('moon-icon');
-    const sunIcon = document.getElementById('sun-icon');
+    // 1. Altera a classe na tag <html> (Raiz do site)
+    const isDark = document.documentElement.classList.toggle('dark');
     
-    // Troca a cor primeiro (independente dos ícones)
-    html.classList.toggle('dark');
-    const isDark = html.classList.contains('dark');
+    // 2. Localiza os ícones
+    const moon = document.getElementById('moon-icon');
+    const sun = document.getElementById('sun-icon');
     
-    // Altera os ícones apenas se eles existirem no seu HTML
-    if (moonIcon && sunIcon) {
+    // 3. Atualiza os ícones visualmente
+    if (moon && sun) {
         if (isDark) {
-            moonIcon.classList.add('hidden');
-            sunIcon.classList.remove('hidden');
+            moon.classList.add('hidden');
+            sun.classList.remove('hidden');
         } else {
-            moonIcon.classList.remove('hidden');
-            sunIcon.classList.add('hidden');
+            moon.classList.remove('hidden');
+            sun.classList.add('hidden');
         }
     }
+    
+    // 4. Salva no navegador para não perder ao recarregar
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
 };
+
+// Adicione isso ao final do script.js para carregar o tema salvo
+if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.classList.add('dark');
+}
 
 // METRÔNOMO
 let metroState = {
@@ -451,6 +457,7 @@ window.toggleAuthView = (view) => {
         }
     }
 };
+
 
 
 
