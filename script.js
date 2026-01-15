@@ -1,12 +1,4 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getAuth, signInAnonymously, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-// CONFIGURAÇÃO - COMENTADO PARA NÃO TRAVAR NO GITHUB
-// const firebaseConfig = JSON.parse(__firebase_config);
-// const app = initializeApp(firebaseConfig);
-// const auth = getAuth(app);
-// const db = getFirestore(app);
+// REMOVEMOS OS IMPORTS POR ENQUANTO PARA GARANTIR QUE O SCRIPT NÃO TRAVE
 const appId = 'lifesupport-pro-v1';
 
 let currentUser = null;
@@ -16,6 +8,9 @@ let currentFIndex = 0;
 let sessionResults = [];
 let finalExamResults = [];
 let learningChartInstance = null;
+
+// ADICIONE ESTA LINHA PARA GARANTIR QUE O DASHBOARD NÃO QUEBRE O SCRIPT
+window.renderDashboard = () => { console.log("Dashboard pronto"); };
 
 // ACORDEÃO
 window.toggleAccordion = (button) => {
@@ -425,3 +420,4 @@ window.getFeedbackHTML = (results, questions) => {
             </div>
         </div>`;
 };
+
