@@ -280,6 +280,7 @@ if(flashGrid) flashGrid.innerHTML = flashcards.map(f => `<div class="flashcard-c
 
 // INICIALIZAÇÃO PADRÃO
 window.switchChain('extra');
+
 // --- LÓGICA DO QUIZ (SIMULADOR) ---
 window.startQuiz = () => {
     currentQIndex = 0; 
@@ -420,5 +421,6 @@ window.getFeedbackHTML = (results, questions) => {
             </div>
         </div>`;
 };
+
 
 
