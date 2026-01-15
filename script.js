@@ -28,10 +28,11 @@ window.toggleTheme = () => {
     const moon = document.getElementById('moon-icon');
     const sun = document.getElementById('sun-icon');
     
+    // Troca a classe dark no HTML
     html.classList.toggle('dark');
     const isDark = html.classList.contains('dark');
     
-    // Mostra/Esconde os ícones baseados no tema atual
+    // Altera os ícones APENAS se eles existirem no HTML
     if (moon && sun) {
         if (isDark) {
             moon.classList.add('hidden');
@@ -42,6 +43,7 @@ window.toggleTheme = () => {
         }
     }
     
+    // Salva a escolha do usuário para a próxima vez que ele abrir o site
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
 };
 
@@ -447,6 +449,7 @@ window.toggleAuthView = (view) => {
         registerView.classList.remove('hidden');
     }
 };
+
 
 
 
