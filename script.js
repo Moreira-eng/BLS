@@ -452,6 +452,63 @@ window.toggleAuthView = (view) => {
     }
 };
 
+// Variáveis do Dashboard
+let attempts = JSON.parse(localStorage.getItem('ls_attempts')) || [];
+let learningChartInstance = null;
+
+window.updateDashboard = (score) => {
+    // 1. Salva a nota no histórico
+    if(score !== undefined) {
+        attempts.push(score);
+        localStorage.setItem('ls_attempts', JSON.stringify(attempts));
+    }
+
+    if (attempts.length === 0) return;
+
+    // 2. Troca visual das telas
+    document.getElementById('stats-placeholder')?.classList.add('hidden');
+    document.getElementById('stats-container')?.classList.remove('hidden');
+
+    // 3. Cálculos
+    const last = attempts[attempts.length - 1];
+    const best = Math.max(...attempts);
+    const avg = Math.round(attempts.reduce((a, b) => a + b, 0) / attempts.length);
+
+    // 4. Preenche os números
+    document.getElementById('avg-score').innerText = `${avg}%`;
+    document.getElementById('total-attempts').innerText = attempts.length;
+    document.getElementById('best-score').innerText = `${best}%`;
+    document.getElementById('latest-score').innerText = `${last}%`;
+
+    // 5. Gera o gráfico
+    window.renderLearningChart();
+};
+
+window.renderLearningChart = () => {
+    const ctx = document.getElementById('learningChart');
+    if (!ctx || typeof Chart === 'undefined') return;
+
+    if (learningChartInstance) learningChartInstance.destroy();
+
+    learningChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: attempts.map((_, i) => `T${i + 1}`),
+            datasets: [{
+                label: '% Acertos',
+                data: attempts,
+                borderColor: '#1d4ed8',
+                backgroundColor: 'rgba(29, 78, 216, 0.1)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
+};
+
+// Carrega dados existentes ao abrir o site
+window.addEventListener('load', () => { if(attempts.length > 0) window.updateDashboard(); });
 
 
 
