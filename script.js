@@ -1,45 +1,3 @@
-// --- COPIE E COLE ISSO NO TOPO DO SCRIPT.JS ---
-
-window.toggleSidebar = function() {
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('sidebar-overlay');
-    if (sidebar) sidebar.classList.toggle('-translate-x-full');
-    if (overlay) overlay.classList.toggle('hidden');
-};
-
-window.showView = function(viewId) {
-    // 1. Seleciona todas as seções
-    const sections = document.querySelectorAll('.view-section');
-    
-    // 2. Esconde todas e remove a classe ativa
-    sections.forEach(s => {
-        s.classList.add('hidden');
-        s.classList.remove('active');
-        s.style.display = 'none'; // Força o desaparecimento
-    });
-
-    // 3. Mostra apenas a que você clicou
-    const target = document.getElementById('view-' + viewId) || document.getElementById(viewId);
-    if (target) {
-        target.classList.remove('hidden');
-        target.classList.add('active');
-        target.style.display = 'block'; // Força a aparição
-    }
-
-    // 4. Fecha a sidebar
-    const sidebar = document.getElementById('sidebar');
-    if (sidebar) sidebar.classList.add('-translate-x-full');
-    
-    const overlay = document.getElementById('sidebar-overlay');
-    if (overlay) overlay.classList.add('hidden');
-
-    window.scrollTo(0, 0);
-};
-
-// Faz o site começar apenas com a tela inicial aparecendo
-document.addEventListener('DOMContentLoaded', () => {
-    window.showView('hero');
-});
 // REMOVA TODOS OS IMPORTS DO FIREBASE DO TOPO
 // O arquivo deve começar diretamente com as definições das variáveis globais:
 
@@ -499,6 +457,8 @@ window.toggleAuthView = (view) => {
         }
     }
 };
+
+
 
 
 
