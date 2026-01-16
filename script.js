@@ -1,3 +1,45 @@
+// --- COPIE E COLE ISSO NO TOPO DO SCRIPT.JS ---
+
+window.toggleSidebar = function() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    if (sidebar) sidebar.classList.toggle('-translate-x-full');
+    if (overlay) overlay.classList.toggle('hidden');
+};
+
+window.showView = function(viewId) {
+    // 1. Seleciona todas as seções
+    const sections = document.querySelectorAll('.view-section');
+    
+    // 2. Esconde todas e remove a classe ativa
+    sections.forEach(s => {
+        s.classList.add('hidden');
+        s.classList.remove('active');
+        s.style.display = 'none'; // Força o desaparecimento
+    });
+
+    // 3. Mostra apenas a que você clicou
+    const target = document.getElementById('view-' + viewId) || document.getElementById(viewId);
+    if (target) {
+        target.classList.remove('hidden');
+        target.classList.add('active');
+        target.style.display = 'block'; // Força a aparição
+    }
+
+    // 4. Fecha a sidebar
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar) sidebar.classList.add('-translate-x-full');
+    
+    const overlay = document.getElementById('sidebar-overlay');
+    if (overlay) overlay.classList.add('hidden');
+
+    window.scrollTo(0, 0);
+};
+
+// Faz o site começar apenas com a tela inicial aparecendo
+document.addEventListener('DOMContentLoaded', () => {
+    window.showView('hero');
+});
 // REMOVA TODOS OS IMPORTS DO FIREBASE DO TOPO
 // O arquivo deve começar diretamente com as definições das variáveis globais:
 
@@ -458,92 +500,9 @@ window.toggleAuthView = (view) => {
     }
 };
 
-// Função para abrir e fechar a barra lateral
-window.toggleSidebar = () => {
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('sidebar-overlay');
-    
-    if (sidebar && overlay) {
-        sidebar.classList.toggle('-translate-x-full'); // Faz a barra deslizar
-        overlay.classList.toggle('hidden'); // Mostra/esconde o fundo escuro
-    }
-};
 
-// Função para trocar de tela
-window.showView = (viewId) => {
-    // 1. Esconde todas as seções
-    document.querySelectorAll('.view-section').forEach(section => {
-        section.classList.remove('active');
-        section.classList.add('hidden');
-    });
 
-    // 2. Procura a tela pelo ID e mostra ela
-    const target = document.getElementById(`view-${viewId}`) || document.getElementById(viewId);
-    if (target) {
-        target.classList.remove('hidden');
-        target.classList.add('active');
-    }
 
-    // 3. Fecha a barra lateral automaticamente
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('sidebar-overlay');
-    if (sidebar) sidebar.classList.add('-translate-x-full');
-    if (overlay) overlay.classList.add('hidden');
 
-    window.scrollTo(0, 0); // Sobe para o topo
-};
-// --- SISTEMA DE NAVEGAÇÃO REFORÇADO ---
-
-// 1. Organização Automática ao carregar
-document.addEventListener('DOMContentLoaded', () => {
-    // Esconde todas as seções, exceto a inicial (Hero)
-    document.querySelectorAll('.view-section').forEach(section => {
-        if (section.id !== 'view-hero') {
-            section.classList.add('hidden');
-            section.style.display = 'none';
-        }
-    });
-});
-
-// 2. Função para o ícone de 3 barrinhas
-window.toggleSidebar = () => {
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('sidebar-overlay');
-    
-    if (sidebar) sidebar.classList.toggle('-translate-x-full');
-    if (overlay) {
-        overlay.classList.toggle('hidden');
-        overlay.style.display = overlay.classList.contains('hidden') ? 'none' : 'block';
-    }
-};
-
-// 3. Função para trocar as telas
-window.showView = (viewId) => {
-    // Esconde todas as telas
-    document.querySelectorAll('.view-section').forEach(section => {
-        section.classList.add('hidden');
-        section.style.display = 'none';
-        section.classList.remove('active');
-    });
-
-    // Mostra a tela correta
-    const target = document.getElementById(`view-${viewId}`) || document.getElementById(viewId);
-    if (target) {
-        target.classList.remove('hidden');
-        target.style.display = 'block';
-        target.classList.add('active');
-    }
-
-    // Fecha a barra lateral
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('sidebar-overlay');
-    if (sidebar) sidebar.classList.add('-translate-x-full');
-    if (overlay) {
-        overlay.classList.add('hidden');
-        overlay.style.display = 'none';
-    }
-
-    window.scrollTo(0, 0);
-};
 
 
