@@ -457,36 +457,8 @@ window.toggleAuthView = (view) => {
         }
     }
 };
-/* Define o comportamento da barra lateral */
-#sidebar {
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform;
-}
 
-/* Define o comportamento do fundo escuro (overlay) */
-.sidebar-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(4px);
-    z-index: 60;
-}
 
-/* Quando o JS adiciona a classe 'active', o overlay aparece */
-.sidebar-overlay.active {
-    display: block;
-}
-
-.sidebar-overlay {
-    display: none; /* Garante que ele suma totalmente */
-    pointer-events: none; /* Ignora cliques quando invisível */
-}
-
-.sidebar-overlay.active {
-    display: block;
-    pointer-events: auto; /* Volta a aceitar cliques para fechar a barra */
-}
 
 
 
