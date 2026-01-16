@@ -298,13 +298,9 @@ window.startQuiz = () => {
 // Função para renderizar a pergunta com o botão Voltar
 window.renderQuestion = () => {
     const q = quizQuestions[currentQIndex];
-    
-    // Atualiza progresso
-    document.getElementById('q-count').innerText = `${currentQIndex + 1} / ${quizQuestions.length}`;
-    document.getElementById('q-progress').style.width = `${((currentQIndex + 1) / quizQuestions.length) * 100}%`;
-    
-    // Renderiza conteúdo
-    document.getElementById('quiz-content').innerHTML = `
+    const container = document.getElementById('quiz-content');
+
+    container.innerHTML = `
         <h3 class="text-2xl font-black mb-10 leading-tight">${q.q}</h3>
         <div class="space-y-4">
             ${q.opts.map((o, i) => `
@@ -314,21 +310,24 @@ window.renderQuestion = () => {
             `).join('')}
         </div>
         
-        <div class="mt-8 flex justify-start">
+        <div class="mt-8">
             <button onclick="window.prevQuestion()" 
-                class="${currentQIndex === 0 ? 'invisible' : 'flex'} items-center gap-2 text-slate-400 hover:text-blue-600 font-bold text-xs uppercase transition-all">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                Voltar
+                class="${currentQIndex === 0 ? 'hidden' : 'flex'} items-center gap-2 text-slate-400 hover:text-blue-600 font-black text-[10px] uppercase transition-all">
+                ← Questão Anterior
             </button>
         </div>
     `;
+    
+    // Atualiza progresso e contador
+    document.getElementById('q-count').innerText = `${currentQIndex + 1} / ${quizQuestions.length}`;
+    document.getElementById('q-progress').style.width = `${((currentQIndex + 1) / quizQuestions.length) * 100}%`;
 };
 
-// Nova função para voltar a questão
+// FUNÇÃO PARA VOLTAR
 window.prevQuestion = () => {
     if (currentQIndex > 0) {
         currentQIndex--;
-        sessionResults.pop(); // Remove o último resultado salvo para não duplicar
+        sessionResults.pop(); // Remove o último resultado para não acumular erro
         window.renderQuestion();
     }
 };
@@ -469,6 +468,7 @@ window.toggleAuthView = (view) => {
         }
     }
 };
+
 
 
 
