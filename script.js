@@ -492,4 +492,40 @@ window.showView = (viewId) => {
 
     window.scrollTo(0, 0); // Sobe para o topo
 };
+// --- SISTEMA DE NAVEGAÇÃO ---
+
+// Esta função faz a troca das telas
+window.showView = (viewId) => {
+    // 1. Esconde todas as seções para não ficarem uma em cima da outra
+    document.querySelectorAll('.view-section').forEach(section => {
+        section.classList.remove('active');
+        section.classList.add('hidden');
+    });
+
+    // 2. Tenta mostrar a tela que você clicou
+    const target = document.getElementById(`view-${viewId}`) || document.getElementById(viewId);
+    if (target) {
+        target.classList.remove('hidden');
+        target.classList.add('active');
+    }
+
+    // 3. Se a barra lateral estiver aberta, ela fecha sozinha
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    if (sidebar) sidebar.classList.add('-translate-x-full');
+    if (overlay) overlay.classList.add('hidden');
+
+    window.scrollTo(0, 0); // Sobe a página para o topo
+};
+
+// Esta função abre e fecha a barra lateral (Hambúrguer)
+window.toggleSidebar = () => {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    
+    if (sidebar && overlay) {
+        sidebar.classList.toggle('-translate-x-full');
+        overlay.classList.toggle('hidden');
+    }
+};
 
