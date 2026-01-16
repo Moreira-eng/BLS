@@ -118,15 +118,16 @@
                 <span>Dashboard de Evolução</span>
             </button>
         </nav>
-       <div class="p-6 border-t border-slate-100 dark:border-slate-800" id="sidebar-user-area">
-            <button onclick="window.openAuthModal()" class="w-full bg-blue-700 text-white py-4 rounded-2xl font-bold hover:bg-blue-800 transition-all shadow-md">
-                Fazer Login
-            </button>
-        </div>
+        <div class="p-6 border-t border-slate-100 dark:border-slate-800" id="sidebar-user-area">
+    <button onclick="window.openAuthModal()" class="w-full bg-blue-700 text-white py-4 rounded-2xl font-bold hover:bg-blue-800 transition-all shadow-md">
+        Fazer Login
+    </button>
+</div>
     </aside>
 
-    <div class="flex-1 flex flex-col min-h-screen relative w-full">
-        
+
+
+
     <header class="sticky top-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors">
         <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
             <div class="flex items-center space-x-4">
@@ -1122,12 +1123,60 @@
                 <div id="flashcards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transition-all transition-all transition-all transition-all"></div>
             </div>
         </section>
-</main> <footer class="bg-white dark:bg-slate-950 border-t border-slate-100 dark:border-slate-800 py-16 text-center">
-        <p class="text-[10px] font-black uppercase tracking-[0.5em] text-slate-300 dark:text-slate-700 italic">LifeSupport &bull; Sincronizado AHA</p>
+<div id="view-avaliacao" class="view-section p-6">
+    <div class="max-w-4xl mx-auto">
+        <h2 class="text-4xl font-black text-blue-900 dark:text-white mb-8 italic uppercase">Dashboard de Evolução</h2>
+        
+        <div id="stats-placeholder" class="bg-white dark:bg-slate-900 rounded-[2.5rem] p-12 text-center border-2 border-dashed border-slate-200 dark:border-slate-800">
+            <div class="text-6xl mb-4">📊</div>
+            <h3 class="text-xl font-bold mb-2">Ainda não há dados</h3>
+            <p class="text-slate-500 mb-6">Complete o simulador analítico para gerar suas estatísticas.</p>
+            <button onclick="window.showView('hero')" class="bg-blue-700 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase">Começar Agora</button>
+        </div>
+
+        <div id="stats-container" class="hidden space-y-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800">
+                    <p class="text-[10px] font-black uppercase text-slate-400 mb-1">Média Geral</p>
+                    <h4 id="avg-score" class="text-3xl font-black text-blue-700">0%</h4>
+                </div>
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800">
+                    <p class="text-[10px] font-black uppercase text-slate-400 mb-1">Simulados</p>
+                    <h4 id="total-attempts" class="text-3xl font-black text-slate-700 dark:text-white">0</h4>
+                </div>
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800">
+                    <p class="text-[10px] font-black uppercase text-slate-400 mb-1">Recorde</p>
+                    <h4 id="best-score" class="text-3xl font-black text-emerald-500">0%</h4>
+                </div>
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800">
+                    <p class="text-[10px] font-black uppercase text-slate-400 mb-1">Última Nota</p>
+                    <h4 id="latest-score" class="text-3xl font-black text-blue-500">0%</h4>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] shadow-xl border border-slate-100 dark:border-slate-800">
+                <h4 class="text-sm font-black uppercase mb-6 flex items-center gap-2">
+                    <span class="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></span> Desempenho Histórico
+                </h4>
+                <div class="h-72 w-full">
+                    <canvas id="learningChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </main>
+
+    <footer class="bg-white dark:bg-slate-950 border-t border-slate-100 dark:border-slate-800 py-16 text-center transition-colors transition-colors transition-colors transition-all">
+        <p class="text-[10px] font-black uppercase tracking-[0.5em] text-slate-300 dark:text-slate-700 italic transition-colors transition-colors transition-colors transition-all transition-all">LifeSupport &bull; Sincronizado AHA</p>
     </footer>
 
-    </div> <script src="script.js"></script>
+    </main>
+
+    <footer class="bg-white dark:bg-slate-950 border-t border-slate-100 py-16 text-center">
+        <p class="text-[10px] font-black uppercase tracking-[0.5em] text-slate-300 italic">LifeSupport &bull; Sincronizado AHA</p>
+    </footer>
+
+    <script type="module" src="script.js"></script>
 </body>
 </html>
-
-
