@@ -457,12 +457,3 @@ window.toggleAuthView = (view) => {
         }
     }
 };
-
-
-
-
-
-
-
-
-
