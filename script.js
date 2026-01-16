@@ -478,6 +478,15 @@ window.toggleAuthView = (view) => {
     display: block;
 }
 
+.sidebar-overlay {
+    display: none; /* Garante que ele suma totalmente */
+    pointer-events: none; /* Ignora cliques quando invisível */
+}
+
+.sidebar-overlay.active {
+    display: block;
+    pointer-events: auto; /* Volta a aceitar cliques para fechar a barra */
+}
 
 
 
