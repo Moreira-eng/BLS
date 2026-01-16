@@ -122,3 +122,22 @@ body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; transition: ba
             background: #0f172a;
             border: 1px solid #1e293b;
         }
+/* Isso deve ficar no arquivo CSS, nunca no JS */
+#sidebar {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 60;
+    pointer-events: none;
+}
+
+.sidebar-overlay.active {
+    display: block;
+    pointer-events: auto;
+}
