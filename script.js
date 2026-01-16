@@ -295,40 +295,29 @@ window.startQuiz = () => {
     window.renderQuestion();
 };
 
-// Função para renderizar a pergunta com o botão Voltar
 window.renderQuestion = () => {
     const q = quizQuestions[currentQIndex];
-    const container = document.getElementById('quiz-content');
+    const qCount = document.getElementById('q-count');
+    const qProgress = document.getElementById('q-progress');
+    const content = document.getElementById('quiz-content');
 
-    container.innerHTML = `
-        <h3 class="text-2xl font-black mb-10 leading-tight">${q.q}</h3>
-        <div class="space-y-4">
-            ${q.opts.map((o, i) => `
-                <button onclick="window.submitAnswer(${i})" class="w-full text-left p-6 rounded-3xl border border-slate-200 dark:border-slate-800 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all font-bold text-xs uppercase">
-                    ${i+1}. ${o}
-                </button>
-            `).join('')}
-        </div>
-        
-        <div class="mt-8">
-            <button onclick="window.prevQuestion()" 
-                class="${currentQIndex === 0 ? 'hidden' : 'flex'} items-center gap-2 text-slate-400 hover:text-blue-600 font-black text-[10px] uppercase transition-all">
-                ← Questão Anterior
-            </button>
-        </div>
-    `;
+    if(qCount) qCount.innerText = `${currentQIndex + 1} / ${quizQuestions.length}`;
+    if(qProgress) qProgress.style.width = `${((currentQIndex + 1) / quizQuestions.length) * 100}%`;
     
-    // Atualiza progresso e contador
-    document.getElementById('q-count').innerText = `${currentQIndex + 1} / ${quizQuestions.length}`;
-    document.getElementById('q-progress').style.width = `${((currentQIndex + 1) / quizQuestions.length) * 100}%`;
-};
-
-// FUNÇÃO PARA VOLTAR
-window.prevQuestion = () => {
-    if (currentQIndex > 0) {
-        currentQIndex--;
-        sessionResults.pop(); // Remove o último resultado para não acumular erro
-        window.renderQuestion();
+    if(content) {
+        content.innerHTML = `
+            <div class="mb-6 flex items-center justify-between">
+                <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 rounded-lg text-[10px] font-black uppercase">${q.cat}</span>
+            </div>
+            <h3 class="text-2xl font-black mb-10 leading-tight text-blue-950 dark:text-blue-400">${q.q}</h3>
+            <div class="space-y-4">
+                ${q.opts.map((o, i) => `
+                    <button onclick="window.submitAnswer(${i})" class="quiz-option w-full text-left p-6 rounded-3xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 hover:border-blue-400 hover:bg-blue-50 flex items-center group transition-all">
+                        <span class="w-10 h-10 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center mr-6 font-black group-hover:bg-blue-600 group-hover:text-white">${i+1}</span>
+                        <span class="font-bold text-slate-700 dark:text-slate-300 uppercase text-xs">${o}</span>
+                    </button>
+                `).join('')}
+            </div>`;
     }
 };
 
@@ -468,8 +457,6 @@ window.toggleAuthView = (view) => {
         }
     }
 };
-
-
 
 
 
