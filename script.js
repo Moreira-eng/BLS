@@ -1,3 +1,30 @@
+// Forçar as funções para o escopo global do navegador
+window.toggleSidebar = function() {
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar) {
+        // Toggle da classe que move a barra (Tailwind)
+        sidebar.classList.toggle('-translate-x-full');
+    }
+};
+
+window.showView = function(viewId) {
+    // Esconde todas as seções de forma absoluta
+    document.querySelectorAll('.view-section').forEach(section => {
+        section.classList.add('hidden');
+        section.style.display = 'none';
+    });
+
+    // Mostra a tela que você clicou
+    const target = document.getElementById('view-' + viewId) || document.getElementById(viewId);
+    if (target) {
+        target.classList.remove('hidden');
+        target.style.display = 'block';
+    }
+
+    // Fecha a sidebar após clicar
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar) sidebar.classList.add('-translate-x-full');
+};
 // REMOVA TODOS OS IMPORTS DO FIREBASE DO TOPO
 // O arquivo deve começar diretamente com as definições das variáveis globais:
 
@@ -222,10 +249,6 @@ window.showView = (v) => {
     window.scrollTo(0,0);
 };
 
-window.toggleSidebar = () => {
-    document.getElementById('sidebar').classList.toggle('-translate-x-full');
-    document.getElementById('sidebar-overlay').classList.toggle('active');
-};
 
 window.switchChain = (t) => {
     const display = document.getElementById('chain-display');
@@ -457,6 +480,7 @@ window.toggleAuthView = (view) => {
         }
     }
 };
+
 
 
 
