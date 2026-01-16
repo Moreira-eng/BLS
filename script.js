@@ -457,3 +457,40 @@ window.toggleAuthView = (view) => {
         }
     }
 };
+// Função para trocar as telas (Views)
+window.showView = (viewId) => {
+    // 1. Esconde todas as seções que têm a classe 'view-section'
+    document.querySelectorAll('.view-section').forEach(section => {
+        section.classList.remove('active');
+        section.style.display = 'none'; // Garante que fiquem invisíveis
+    });
+
+    // 2. Tenta encontrar a seção pelo ID (ex: view-introducao ou introducao)
+    const target = document.getElementById(`view-${viewId}`) || document.getElementById(viewId);
+    
+    if (target) {
+        target.classList.add('active');
+        target.style.display = 'block'; // Mostra a tela selecionada
+    }
+
+    // 3. Fecha a barra lateral automaticamente após o clique
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar) sidebar.classList.add('-translate-x-full');
+    
+    const overlay = document.getElementById('sidebar-overlay');
+    if (overlay) overlay.classList.add('hidden');
+
+    // Volta o scroll para o topo da página
+    window.scrollTo(0, 0);
+};
+
+// Função para abrir/fechar a barra lateral
+window.toggleSidebar = () => {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    
+    if (sidebar && overlay) {
+        sidebar.classList.toggle('-translate-x-full');
+        overlay.classList.toggle('hidden');
+    }
+};
